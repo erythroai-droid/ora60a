@@ -1,13 +1,25 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import { Heebo, Inter } from 'next/font/google';
+// Self-host via fontsource — next/font/google flaky on Vercel (extensionless /l/font?kit= URLs)
+import '@fontsource/inter/latin-300.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/cyrillic-300.css';
+import '@fontsource/inter/cyrillic-400.css';
+import '@fontsource/inter/cyrillic-500.css';
+import '@fontsource/inter/cyrillic-600.css';
+import '@fontsource/heebo/latin-300.css';
+import '@fontsource/heebo/latin-400.css';
+import '@fontsource/heebo/latin-500.css';
+import '@fontsource/heebo/latin-600.css';
+import '@fontsource/heebo/hebrew-300.css';
+import '@fontsource/heebo/hebrew-400.css';
+import '@fontsource/heebo/hebrew-500.css';
+import '@fontsource/heebo/hebrew-600.css';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n';
 
-// Latin + Cyrillic face (Windows has no Helvetica Neue, so the Rosso stack fell back to Arial)
-const inter = Inter({ subsets: ['latin', 'cyrillic'], weight: ['300', '400', '500', '600'], variable: '--font-main', display: 'swap' });
-// Hebrew: Heebo
-const heebo = Heebo({ subsets: ['hebrew', 'latin'], weight: ['300', '400', '500', '600'], variable: '--font-he', display: 'swap' });
 // Arabic (+ paired Latin): True Arabic
 const trueArabic = localFont({
   src: [
@@ -29,7 +41,7 @@ export const viewport: Viewport = { themeColor: '#ebebeb', width: 'device-width'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className={`${inter.variable} ${heebo.variable} ${trueArabic.variable}`} suppressHydrationWarning>
+    <html lang="en" dir="ltr" className={trueArabic.variable} suppressHydrationWarning>
       <head>
         {/* decide the static (no-animation) layout before first paint, so phones never flash the animated one */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.toggle('static',matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce)').matches)" }} />

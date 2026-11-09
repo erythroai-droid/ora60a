@@ -1,5 +1,13 @@
 # Watch — pitfalls
 
+## Vercel build: `next/font` TypeError on Inter/Heebo
+
+**Symptom:** `next build` fails with `An error occurred in next/font` → `TypeError: Cannot read properties of null (reading '1')` in `@next/font/dist/google/loader.js`, often on a cold Vercel build without cache.
+
+**Cause:** Google Fonts sometimes returns extensionless `/l/font?kit=…` URLs. Next 15.x webpack loader assumes a `.woff2` suffix and crashes. Upstream: [vercel/next.js#99114](https://github.com/vercel/next.js/issues/99114); fixed in Next ≥16.4.3, not yet released on 15.5.x.
+
+**Fix:** Do not use `next/font/google` for Inter/Heebo on this stack. Self-host via `@fontsource/inter` + `@fontsource/heebo` CSS imports and set `--font-main` / `--font-he` in `globals.css`. Keep Arabic on `next/font/local`.
+
 ## Full-screen pin + magnet: next block covers content too early
 
 **Symptom:** On scroll down a section “skips”, and the next block starts rising immediately, covering the bottom of the current copy (Movement / Design / Parts).

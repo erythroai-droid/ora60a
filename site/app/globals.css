@@ -9,6 +9,8 @@
   --hold:var(--vh);               /* full-screen pause before the next block slides over (HOLD in lib/scroll.tsx) */
   --gx:3.2vw;                      /* side gutter */
   --ease:cubic-bezier(.2,.8,.2,1);
+  --font-main:Inter;               /* self-hosted via @fontsource (not next/font/google) */
+  --font-he:Heebo;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);scrollbar-width:none;-ms-overflow-style:none;overflow-x:clip;max-width:100%}
