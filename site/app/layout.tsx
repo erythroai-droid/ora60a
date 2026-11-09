@@ -17,6 +17,7 @@ import '@fontsource/heebo/hebrew-300.css';
 import '@fontsource/heebo/hebrew-400.css';
 import '@fontsource/heebo/hebrew-500.css';
 import '@fontsource/heebo/hebrew-600.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n';
 
@@ -46,7 +47,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* decide the static (no-animation) layout before first paint, so phones never flash the animated one */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.toggle('static',matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce)').matches)" }} />
       </head>
-      <body><I18nProvider>{children}</I18nProvider></body>
+      <body>
+        <I18nProvider>{children}</I18nProvider>
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
