@@ -1,0 +1,21 @@
+# dependencies / build
+site/node_modules/
+site/.next/
+site/.next-build/
+site/*.tsbuildinfo
+**/node_modules/
+**/.next/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.claude/
+*.log
+
+# large local media (keep site/public assets that the app serves)
+Video/
