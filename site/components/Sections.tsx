@@ -154,7 +154,7 @@ export function Design() {
                   <div className="ds-slide-img">
                     <picture>
                       <source media="(max-width: 900px)" srcSet={framePath(1280, s.frame)} />
-                      <img src={framePath(1920, s.frame)} alt="" width={1920} height={1080} draggable={false} />
+                      <img src={framePath(1920, s.frame)} alt={t(`ds_s${s.n}h`)} width={1920} height={1080} draggable={false} />
                     </picture>
                   </div>
                   <div className="ds-slide-copy">
@@ -175,7 +175,15 @@ export function Design() {
             </button>
             <div className="ds-dots" role="tablist" aria-label={t('ds_k')}>
               {DESIGN_SLIDES.map((s, k) => (
-                <button key={s.n} type="button" role="tab" aria-selected={k === i} className={k === i ? 'on' : ''} onClick={() => setI(k)} />
+                <button
+                  key={s.n}
+                  type="button"
+                  role="tab"
+                  aria-selected={k === i}
+                  aria-label={`${pad(s.n)} — ${t(`ds_s${s.n}h`)}`}
+                  className={k === i ? 'on' : ''}
+                  onClick={() => setI(k)}
+                />
               ))}
             </div>
             <button type="button" className="ds-arrow" onClick={() => go(i + 1)} aria-label={t('ds_next')}>

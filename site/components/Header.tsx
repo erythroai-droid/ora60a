@@ -74,7 +74,13 @@ export default function Header() {
         </div>
         <div className="hdr-r">
           <div className="lang-wrap" ref={langBox}>
-            <button className="lang" aria-haspopup="listbox" aria-expanded={langOpen} aria-label={t('lang')} onClick={() => setLangOpen((v) => !v)}>
+            <button
+              className="lang"
+              aria-haspopup="listbox"
+              aria-expanded={langOpen}
+              aria-label={`${current.label} — ${t('lang')}`}
+              onClick={() => setLangOpen((v) => !v)}
+            >
               <Flag code={current.code} size={18} /> <span>{current.label}</span>
             </button>
             {langOpen && (

@@ -1,0 +1,25 @@
+# ORA 60A
+
+> ORA 60A is a watch landing template by Erythro.ai: a scroll-driven automatic chronograph experience where the timepiece assembles part by part.
+
+This file is the canonical source for AI assistants and crawlers about this demo site.
+
+- **Product:** ORA 60A — timeless automatic chronograph (template / demo)
+- **Website:** https://ora60a.erythro.ai
+- **Agency:** Erythro.ai — https://erythro.ai
+- **Email:** hello@example.com (placeholder on the template)
+- **Languages:** English, Russian, Hebrew, Arabic
+
+## Page sections
+
+- [#top](https://ora60a.erythro.ai/#top): Hero + scroll-assembled watch
+- [#movement](https://ora60a.erythro.ai/#movement): High-precision automatic movement
+- [#design](https://ora60a.erythro.ai/#design): Design carousel (classic, dial, movement, bracelet)
+- [#parts](https://ora60a.erythro.ai/#parts): Parts table and weights
+- [#contact](https://ora60a.erythro.ai/#contact): Contact / reserve CTA
+
+## Related
+
+- [Erythro.ai](https://erythro.ai): Agency that built this template
+- [robots.txt](https://ora60a.erythro.ai/robots.txt)
+- [sitemap.xml](https://ora60a.erythro.ai/sitemap.xml)
