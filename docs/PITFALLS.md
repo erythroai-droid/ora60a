@@ -1,5 +1,13 @@
 # Watch — pitfalls
 
+## Content blocks look transparent on Vercel (missing `/video/*.mp4`)
+
+**Symptom:** Movement / Design / Parts sections are washed out / see-through after deploy; locally they look fine.
+
+**Cause:** `.gitignore` had `Video/`, which on Windows also matched `site/public/video/` (case-insensitive). Background mp4s never shipped. Sections used `.has-vbg { background: transparent }` and relied on a semi-opaque veil over the video — with a 404 video, the veil composites over the assembly stage behind.
+
+**Fix:** Ignore only `/Video/` at repo root. Keep opaque `background: var(--panel)` under `.has-vbg` so a missing video cannot punch a hole. Commit the three loop mp4s in `site/public/video/` (not `watch-assembly.mov`).
+
 ## Vercel build: `next/font` TypeError on Inter/Heebo
 
 **Symptom:** `next build` fails with `An error occurred in next/font` → `TypeError: Cannot read properties of null (reading '1')` in `@next/font/dist/google/loader.js`, often on a cold Vercel build without cache.

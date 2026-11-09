@@ -17,5 +17,5 @@ Thumbs.db
 .claude/
 *.log
 
-# large local media (keep site/public assets that the app serves)
-Video/
+# large local source media at repo root (NOT site/public/video — those must deploy)
+/Video/
