@@ -3,7 +3,7 @@ import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Modal from './Modal';
 import Flag from './Flag';
 import { LANGS, useI18n } from '@/lib/i18n';
-import { goToSection, refreshScroll } from '@/lib/scroll';
+import { goToSection, gsap, refreshScroll } from '@/lib/scroll';
 import { BRAND, MODEL } from '@/lib/watch';
 
 // numbers match on-page section labels (mv_k / ds_k / pt_k); overview + contact sit outside that 01–03 sequence
@@ -55,12 +55,13 @@ export default function Header() {
       const ftr = document.querySelector<HTMLElement>('.ftr.has-vbg');
       const overFtr = !!ftr?.querySelector('.vbg') && ftr.getBoundingClientRect().top < 64;
       const under = overAsm || overFtr;
-      hdr.classList.toggle('on-dark', under);
+      if (hdr.classList.contains('on-dark') !== under) hdr.classList.toggle('on-dark', under);
     };
     sync();
-    window.addEventListener('scroll', sync, { passive: true });
+    // smooth scrolling keeps moving content after the last native scroll event — check every frame
+    gsap.ticker.add(sync);
     window.addEventListener('resize', sync);
-    return () => { window.removeEventListener('scroll', sync); window.removeEventListener('resize', sync); hdr.classList.remove('on-dark'); };
+    return () => { gsap.ticker.remove(sync); window.removeEventListener('resize', sync); hdr.classList.remove('on-dark'); };
   }, []);
 
   const go = (hash: string) => { close(); setTimeout(() => goToSection(hash), 120); };
