@@ -25,7 +25,7 @@ export default function Cursor() {
       tg.closest('[data-cursor=hold]') ? 'hold' : '';
     // light variant over the dark footer video (static mode drops the .vbg layer, footer stays light)
     let px = -1, py = -1;
-    const onDark = (tg: Element | null) => !!tg?.closest('.ftr.has-vbg')?.querySelector(':scope > .vbg');
+    const onDark = (tg: Element | null) => !!tg?.closest('.demo') || !!tg?.closest('.ftr.has-vbg')?.querySelector(':scope > .vbg');
     const syncDark = () => {
       if (px < 0) return;
       const dark = onDark(document.elementFromPoint(px, py));
