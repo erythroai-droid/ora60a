@@ -50,7 +50,11 @@ export default function Header() {
     if (!hdr) return;
     const sync = () => {
       const asm = document.querySelector<HTMLElement>('#top.asm, #top.asm-static, .asm, .asm-static');
-      const under = asm ? asm.getBoundingClientRect().bottom > 64 : window.scrollY < window.innerHeight;
+      const overAsm = asm ? asm.getBoundingClientRect().bottom > 64 : window.scrollY < window.innerHeight;
+      // dark footer video (desktop only — static mode drops the .vbg layer)
+      const ftr = document.querySelector<HTMLElement>('.ftr.has-vbg');
+      const overFtr = !!ftr?.querySelector('.vbg') && ftr.getBoundingClientRect().top < 64;
+      const under = overAsm || overFtr;
       hdr.classList.toggle('on-dark', under);
     };
     sync();

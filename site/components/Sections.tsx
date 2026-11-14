@@ -306,7 +306,8 @@ export function Footer() {
   }, [ready]);
 
   return (
-    <footer id="contact" className="ftr rise" data-slide="blk">
+    <footer id="contact" className="ftr rise has-vbg" data-slide="blk">
+      <VideoBg src="/video/footer-hand.mp4" className="vbg-crop-top" />
       <div ref={title} className="ftr-title" dir="ltr" aria-hidden>
         <span className="ftr-title-track">
           <span className="ftr-brand">{BRAND}</span><span className="ftr-model">{MODEL}</span>

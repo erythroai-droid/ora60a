@@ -192,9 +192,18 @@ html.has-cursor :is(input,textarea){cursor:text!important}
 .vbg-veil{position:absolute;inset:0;background:
   linear-gradient(180deg,rgba(246,244,247,.78) 0%,rgba(246,244,247,.62) 45%,rgba(246,244,247,.82) 100%),
   radial-gradient(70% 60% at 80% 10%,rgba(210,173,114,.12),transparent 55%)}
+/* footer: crop the top 36% of the source (the man's head) — the video is anchored to the bottom and
+   always at least 1/0.64 of the footer height tall, so that band never enters the box at any aspect */
+.vbg-crop-top{container-type:size}
+.vbg-crop-top .vbg-video{inset:auto;left:50%;bottom:0;width:max(100cqw,calc(100cqh / .64 * 16 / 9));height:auto;aspect-ratio:16/9;object-fit:fill;transform:translateX(-50%)}
 .ftr.has-vbg .vbg-veil{background:
-  linear-gradient(180deg,rgba(246,244,247,.55) 0%,rgba(217,213,220,.72) 55%,rgba(217,213,220,.88) 100%),
-  radial-gradient(70% 50% at 0% 100%,rgba(210,173,114,.16),transparent 55%)}
+  linear-gradient(180deg,rgba(14,12,16,.82) 0%,rgba(14,12,16,.62) 40%,rgba(14,12,16,.7) 70%,rgba(14,12,16,.9) 100%),
+  radial-gradient(70% 50% at 0% 100%,rgba(210,173,114,.14),transparent 55%)}
+/* light type over the darkened video */
+.ftr.has-vbg:has(.vbg){background:#141216;color:#f3f1f4;--fg:#f3f1f4;--line:rgba(255,255,255,.24);--line2:rgba(255,255,255,.14);--mute:#b4afb9;--silver:#9c97a2}
+.ftr.has-vbg:has(.vbg) .ftr-model{color:rgba(255,255,255,.3)}
+.ftr.has-vbg:has(.vbg) .btn.solid{background:#f3f1f4;color:#141216;border-color:#f3f1f4}
+.ftr.has-vbg:has(.vbg) .btn.solid:hover{background:transparent;color:#f3f1f4}
 .has-vbg > :not(.vbg){position:relative;z-index:1}
 /* keep opaque panel under the video layer — if mp4 404s, blocks must not go see-through */
 .has-vbg.rise{background:var(--panel)}
