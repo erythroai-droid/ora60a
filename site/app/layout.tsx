@@ -36,9 +36,24 @@ const trueArabic = localFont({
   preload: false,
 });
 
+const title = 'ORA 60A — the timeless automatic chronograph';
+const description = 'Watch landing template: the watch assembles itself part by part as you scroll.';
+
+// og/twitter images come from app/opengraph-image.jpg + app/twitter-image.jpg (Next file convention)
 export const metadata: Metadata = {
-  title: 'ORA 60A — the timeless automatic chronograph',
-  description: 'Watch landing template: the watch assembles itself part by part as you scroll.',
+  metadataBase: new URL('https://ora60a.erythro.ai'),
+  title,
+  description,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: 'ORA 60A',
+    title,
+    description,
+    locale: 'en_US',
+  },
+  twitter: { card: 'summary_large_image', title, description },
 };
 export const viewport: Viewport = { themeColor: '#ebebeb', width: 'device-width', initialScale: 1 };
 
