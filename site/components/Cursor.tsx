@@ -23,8 +23,19 @@ export default function Cursor() {
       tg.closest('input,textarea,select') ? 'text' :
       tg.closest('a,button,[role=option],label') ? 'link' :
       tg.closest('[data-cursor=hold]') ? 'hold' : '';
+    // light variant over the dark footer video (static mode drops the .vbg layer, footer stays light)
+    let px = -1, py = -1;
+    const onDark = (tg: Element | null) => !!tg?.closest('.ftr.has-vbg')?.querySelector(':scope > .vbg');
+    const syncDark = () => {
+      if (px < 0) return;
+      const dark = onDark(document.elementFromPoint(px, py));
+      if (node.classList.contains('dark') !== dark) node.classList.toggle('dark', dark);
+    };
+    // content keeps gliding under a still pointer while smooth-scrolling, so re-check every frame
+    gsap.ticker.add(syncDark);
     const move = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse') return;
+      px = e.clientX; py = e.clientY;
       if (first) { gsap.set(node, { x: e.clientX, y: e.clientY }); first = false; }
       xTo(e.clientX); yTo(e.clientY);
       node.dataset.mode = mode(e.target as Element);
@@ -38,6 +49,7 @@ export default function Cursor() {
     window.addEventListener('pointerup', up);
     document.documentElement.addEventListener('mouseleave', leave);
     return () => {
+      gsap.ticker.remove(syncDark);
       root.classList.remove('has-cursor');
       window.removeEventListener('pointermove', move); window.removeEventListener('pointerdown', down); window.removeEventListener('pointerup', up);
       document.documentElement.removeEventListener('mouseleave', leave);

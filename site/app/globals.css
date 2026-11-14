@@ -61,6 +61,9 @@ html.has-cursor :is(input,textarea){cursor:text!important}
 .cur[data-mode=hold] .cur-label{opacity:1}
 .cur.down[data-mode=hold] .cur-ring{width:96px;height:96px;left:-48px;top:-48px;background:rgba(255,255,255,.28)}
 .cur[data-mode=text]{opacity:0}
+.cur.dark .cur-ring{border-color:rgba(255,255,255,.7)}
+.cur.dark[data-mode=link] .cur-ring{background:#f3f1f4;border-color:#f3f1f4}
+.cur.dark .cur-arrow{color:#141216}
 
 /* ---------- preloader: thin circle filled by the load progress ---------- */
 .pre{position:fixed;inset:0;z-index:100;background:#ebebeb;color:#2b282e;display:grid;place-items:center;transition:opacity .9s ease .2s,visibility .9s .2s}
