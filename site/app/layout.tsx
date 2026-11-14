@@ -21,6 +21,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n';
+import { MetaPixel } from '@/components/MetaPixel';
 
 // Arabic (+ paired Latin): True Arabic
 const trueArabic = localFont({
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <I18nProvider>{children}</I18nProvider>
         <SpeedInsights />
         <Analytics />
+        <MetaPixel />
       </body>
     </html>
   );

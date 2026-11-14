@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useI18n } from '@/lib/i18n';
 import { DEMO, trackDemo, waLink } from '@/lib/demo';
+import { fbTrack } from '@/lib/metaPixel';
 
 type State = 'hidden' | 'open' | 'mini';
 const KEY = 'demo-notice';
@@ -96,7 +97,11 @@ export default function DemoNotice() {
         <p>{t('demo_p')}</p>
         <div className="demo-act">
           <a className="demo-wa" href={waLink(t('demo_msg'))} target="_blank" rel="noopener noreferrer" tabIndex={state === 'open' ? 0 : -1}
-            onClick={() => trackDemo('demo_whatsapp_click', { opened_by: openedBy.current || 'button', lang })}>
+            onClick={() => {
+              trackDemo('demo_whatsapp_click', { opened_by: openedBy.current || 'button', lang });
+              fbTrack('Contact', { content_name: 'whatsapp' });
+              fbTrack('Lead', { content_name: 'whatsapp' });
+            }}>
             <WaIcon /> {t('demo_wa')}
           </a>
         </div>
