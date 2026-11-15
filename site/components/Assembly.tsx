@@ -236,6 +236,12 @@ function StaticAssembly() {
         <BgType />
         <div className="hero"><Hero /></div>
       </div>
+      {/* text break so the hero still and the first part still don't run into each other */}
+      <div className="st-intro">
+        <small>{t('st_k')}</small>
+        <h2>{t('st_h1')}<br /><span>{t('st_h2')}</span></h2>
+        <p>{t('st_p')}</p>
+      </div>
       {PARTS.map((p, i) => (
         <article key={p.n} className="st-card">
           <div className="st-img"><img src={framePath(1280, stillOf(i + 1))} alt="" loading="lazy" width={1280} height={720} /></div>
