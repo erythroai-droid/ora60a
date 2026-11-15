@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { gsap, HOLD, registerZone, ScrollTrigger, useScrollReady, useStaticMode } from '@/lib/scroll';
+import { gsap, HOLD, prefersReducedMotion, registerZone, ScrollTrigger, useScrollReady, useStaticMode } from '@/lib/scroll';
 import { useI18n } from '@/lib/i18n';
 import { ASSEMBLY_SHARE, BRAND, FRAMES, framePath, locate, MODEL, pad, PARTS, SHOWCASE, STAGES, stillOf, TOTAL_G } from '@/lib/watch';
 import Num from './Num';
@@ -226,13 +226,42 @@ function AnimatedAssembly({ vh = 1000, covered, onLoadProgress }: Props) {
   );
 }
 
-// Static page (phones, reduced motion): the hero over the assembled watch, then one still per part with its copy. No canvas, no scrubbing.
+/**
+ * Static hero backdrop. Phones/tablets get the portrait assembly clip (720x980, ~2.5 MB): it plays once and stays on the
+ * assembled watch. Reduced motion or Data Saver get its last frame; wide screens under reduced motion keep the 16:9 still.
+ */
+function StaticHeroMedia() {
+  const [still] = useState(() => prefersReducedMotion() || !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+  if (still) {
+    return (
+      <picture className="st-hero-media">
+        <source media="(max-width: 900px)" srcSet="/video/hero-assembly-m-end.webp" />
+        <img src={framePath(1280, FRAMES - 1)} alt="" width={1280} height={720} />
+      </picture>
+    );
+  }
+  return (
+    <video
+      className="st-hero-media"
+      src="/video/hero-assembly-m.mp4"
+      poster="/video/hero-assembly-m-poster.webp"
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      aria-hidden
+    />
+  );
+}
+
+// Static page (phones, reduced motion): the hero over the assembly clip, then one still per part with its copy. No canvas, no scrubbing.
 function StaticAssembly() {
   const { t } = useI18n();
   return (
     <section id="top" className="asm-static" data-slide="seq">
       <div className="st-hero">
-        <img src={framePath(1280, FRAMES - 1)} alt="" width={1280} height={720} />
+        <StaticHeroMedia />
         <BgType />
         <div className="hero"><Hero /></div>
       </div>
