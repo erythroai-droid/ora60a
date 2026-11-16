@@ -41,7 +41,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let l: Lang = 'en';
     try {
-      const urlLang = normalizeLang(new URLSearchParams(window.location.search).get('lang'));
+      const q = new URLSearchParams(window.location.search);
+      // ?lang=he wins; otherwise an ad campaign named "…_he" / "…_ru" / "…_ar" / "…_en" sets the language,
+      // so Hebrew ads open the RTL version even when the ad link has no lang parameter
+      const urlLang = normalizeLang(q.get('lang')) ?? normalizeLang(q.get('utm_campaign')?.match(/[_-](he|iw|ru|ar|en)$/i)?.[1]);
       if (urlLang) {
         l = urlLang;
         localStorage.setItem('lang', urlLang);

@@ -8,7 +8,7 @@ export const DEMO = {
   /** WhatsApp number (used only in the wa.me link, not shown on the page) */
   phone: '+972505308305',
   /** the WhatsApp button shows from the start; the card unfolds on its own after this long… */
-  delayMs: 12_000,
+  delayMs: 3_500,   // most mobile ad visitors leave within 5–10 s (GA4, 16.11.2026: ~1 s average engagement)
   /** …or once the visitor scrolls this many screens down (or reaches the footer / exit intent), whichever comes first */
   openAfterScreens: 1,
 };

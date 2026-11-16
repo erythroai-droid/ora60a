@@ -342,6 +342,9 @@ html.static .rv{opacity:1;visibility:visible;clip-path:none;transform:none}
 .form label{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-block-end:18px}
 .form input,.form textarea{display:block;width:100%;margin-block-start:8px;background:transparent;border:0;border-block-end:1px solid var(--line);color:var(--fg);font:inherit;font-size:16px;letter-spacing:0;text-transform:none;padding-block:8px;outline:none}
 .form input:focus,.form textarea:focus{border-color:var(--fg)}
+.form-err{margin-block:-4px 18px;font-size:13px;line-height:1.5;color:#e0624f}
+.form-err a{color:#25d366;white-space:nowrap}
+.form .btn[disabled]{opacity:.6;cursor:progress}
 .form textarea{resize:vertical}
 .form-done p{color:var(--mute);line-height:1.6;margin-block-end:26px;font-size:15px}
 .modal.full{padding:0;background:rgba(235,235,235,.97)}
