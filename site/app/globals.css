@@ -596,3 +596,41 @@ html.static .ds-slide-copy h3{color:var(--fg)}
   .bg-type{transform:none}
   .bg-word-a,.bg-word-b,.bg-gauge{transform:none}
 }
+
+/* ======== studio frame on phones (AI Smart Card template): demo strip on top + full-width "I want a site like this" WhatsApp CTA at the bottom ======== */
+/* StudioBar renders only at ≤900px (usePhone); wider screens keep the DemoNotice card */
+:root{--strip:0px;--sbar:0px}
+@media (max-width:900px){
+  html.has-studio{--strip:30px;--sbar:58px}
+  .studio-strip{position:fixed;z-index:31;inset-block-start:0;inset-inline:0;height:var(--strip);display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding-inline:var(--gx);background:#c9a063;color:#17110b;font:600 9.5px/1 var(--font-main),sans-serif;letter-spacing:.14em;text-transform:uppercase}
+  .studio-tag{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .studio-tag i{width:7px;height:7px;border-radius:50%;background:#17110b;animation:stripDot 1.6s ease-in-out infinite}
+  .studio-more{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:#17110b;letter-spacing:.06em}
+  .studio-more .arr{transition:transform .25s}
+  .studio-more:hover .arr{transform:translateX(3px)}
+  [dir=rtl] .studio-more .arr{transform:scaleX(-1)}
+  [dir=rtl] .studio-more:hover .arr{transform:scaleX(-1) translateX(3px)}
+  html:is([lang=he],[lang=ar]) .studio-strip{font-size:12px;letter-spacing:0}
+  html:is([lang=he],[lang=ar]) .studio-more{letter-spacing:0}
+
+  .studio-bar{position:fixed;z-index:45;inset-inline:0;bottom:0;display:flex}
+  .studio-cta{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:calc(58px + env(safe-area-inset-bottom));padding:0 20px env(safe-area-inset-bottom);
+    background:#c9a063;color:#17110b;font:600 14px/1 var(--font-main),sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 -10px 30px rgba(0,0,0,.22)}
+  .studio-cta svg{flex:none}
+  .studio-cta:active{background:#dcb87e}
+  [dir=rtl] .studio-cta .arr{transform:scaleX(-1)}
+  html:is([lang=he],[lang=ar]) .studio-cta{font-size:16px;letter-spacing:0}
+
+  /* the header sits under the strip; floating buttons ride above the bar; the page end is not hidden under it */
+  html.has-studio .hdr{inset-block-start:var(--strip)}
+  html.has-studio .ai-fab{inset-block-end:calc(var(--sbar) + 10px + env(safe-area-inset-bottom))}
+  html.has-studio .totop{inset-block-end:calc(var(--sbar) + 72px + env(safe-area-inset-bottom))}
+  html.has-studio .ai{inset-block-end:calc(var(--sbar) + 12px + env(safe-area-inset-bottom));height:min(calc(78dvh - var(--sbar) - var(--strip)),620px)}
+  html.has-studio .ftr{padding-block-end:calc(30px + var(--sbar) + env(safe-area-inset-bottom))}
+  /* hero copy at the bottom of the first screen moves up out from under the CTA */
+  html.has-studio .hero-p{inset-block-end:calc(4vh + var(--sbar))}
+  html.has-studio .hero-brand{inset-block-end:calc(14vh + var(--sbar))}
+}
+@keyframes stripDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+@media (prefers-reduced-motion:reduce){.studio-tag i{animation:none}}

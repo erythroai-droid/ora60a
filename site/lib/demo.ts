@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { track } from '@vercel/analytics';
 import { gaEvent } from './ga';
 
@@ -53,3 +54,17 @@ export const adSource = (): string => {
 /** wa.me link with the pre-filled message; the ad source, when known, goes on its own line at the end. */
 export const waLink = (text: string, src = '') =>
   `https://wa.me/${DEMO.phone.replace(/\D/g, '')}?text=${encodeURIComponent(src ? `${text}\n\n[${src}]` : text)}`;
+
+/** Phones and small tablets (≤900px, the same breakpoint as the CSS): StudioBar there, the DemoNotice card on wider screens. */
+export const PHONE_MQ = '(max-width: 900px)';
+export const usePhone = (): boolean | null => {
+  const [phone, setPhone] = useState<boolean | null>(null);   // null until mounted: render neither variant on the server
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE_MQ);
+    const on = () => setPhone(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  return phone;
+};

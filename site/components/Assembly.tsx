@@ -72,7 +72,7 @@ function AnimatedAssembly({ vh = 1000, covered, onLoadProgress }: Props) {
     const canvas = cv.current!, trackEl = track.current!, stageEl = stage.current!, heroEl = hero.current!, ctx = canvas.getContext('2d')!;
     const dir = tier();
     const imgs: (HTMLImageElement | null)[] = new Array(FRAMES).fill(null);
-    let cssW = 0, cssH = 0, frame = 0, drawn = -1, visible = false, started = false, gen = 0, loaded = 0, activeIdx = 0, holding = false, showcasing = false;
+    let painted = false, cssW = 0, cssH = 0, frame = 0, drawn = -1, visible = false, started = false, gen = 0, loaded = 0, activeIdx = 0, holding = false, showcasing = false;
 
     const ok = (i: number) => !!imgs[i] && imgs[i]!.naturalWidth > 0;
     const nearest = (i: number) => {
@@ -92,6 +92,7 @@ function AnimatedAssembly({ vh = 1000, covered, onLoadProgress }: Props) {
       const dw = im.naturalWidth * s, dh = im.naturalHeight * s;
       ctx.fillStyle = BG; ctx.fillRect(0, 0, cssW, cssH);
       ctx.drawImage(im, (cssW - dw) / 2, (cssH - dh) / 2, dw, dh);
+      if (!painted) { painted = true; firstFrame(); }
       drawn = j === i ? i : -1;   // keep retrying until the exact frame has arrived
     };
     const resize = () => {
@@ -230,13 +231,16 @@ function AnimatedAssembly({ vh = 1000, covered, onLoadProgress }: Props) {
  * Static hero backdrop. Phones/tablets get the portrait assembly clip (720x980, ~2.5 MB): it plays once and stays on the
  * assembled watch. Reduced motion or Data Saver get its last frame; wide screens under reduced motion keep the 16:9 still.
  */
+/** First real picture on screen → Metrics (film_first_frame). */
+const firstFrame = () => window.dispatchEvent(new CustomEvent('film-first-frame', { detail: Math.round(performance.now()) }));
+
 function StaticHeroMedia() {
   const [still] = useState(() => prefersReducedMotion() || !!(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
   if (still) {
     return (
       <picture className="st-hero-media">
         <source media="(max-width: 900px)" srcSet="/video/hero-assembly-m-end.webp" />
-        <img src={framePath(1280, FRAMES - 1)} alt="" width={1280} height={720} />
+        <img src={framePath(1280, FRAMES - 1)} alt="" width={1280} height={720} onLoad={firstFrame} />
       </picture>
     );
   }
@@ -251,6 +255,7 @@ function StaticHeroMedia() {
       preload="auto"
       disablePictureInPicture
       aria-hidden
+      onLoadedData={firstFrame}
     />
   );
 }

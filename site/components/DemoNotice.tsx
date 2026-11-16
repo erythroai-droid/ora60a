@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useI18n } from '@/lib/i18n';
-import { adSource, DEMO, trackDemo, waLink } from '@/lib/demo';
+import { adSource, DEMO, trackDemo, usePhone, waLink } from '@/lib/demo';
 import { fbTrack } from '@/lib/metaPixel';
 
 type State = 'open' | 'mini';
@@ -13,8 +13,15 @@ const KEY = 'demo-notice';
  * contact us") unfolds from it on its own once per visit — after DEMO.delayMs, once the visitor scrolls past the
  * first screen, when the footer comes into view, or when the mouse heads for the tab bar — and folds back into the
  * button when closed. On a reload in the same visit it unfolds again right away.
+ * Wide screens only: phones get the StudioBar (demo strip + full-width WhatsApp CTA) instead.
  */
 export default function DemoNotice() {
+  const phone = usePhone();
+  if (phone !== false) return null;
+  return <Notice />;
+}
+
+function Notice() {
   const { t, lang } = useI18n();
   const [state, setState] = useState<State>('mini');
   const stateRef = useRef<State>('mini');
