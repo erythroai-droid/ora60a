@@ -19,19 +19,16 @@ export const DEMO = {
  *   demo_notice_shown { trigger: timer | scroll | footer | exit | reload }
  *   demo_notice_closed { via: close | esc | swipe }
  *   demo_notice_reopened {}            — clicked the collapsed WhatsApp button
- *   demo_whatsapp_click { opened_by, lang, source? } — the conversion; source = adSource() when the visit came from an ad
+ *   demo_whatsapp_click { opened_by, lang, source? } — WhatsApp opened (not a lead); source = adSource() when the visit came from an ad
  * In development they are only logged to the console.
- * The same events go to GA4 under the same names, except the conversion, which GA4 gets as
- * whatsapp_click + the recommended generate_lead { method: whatsapp } (mark it as a key event in GA4 → Admin → Events).
+ * The same events go to GA4 under the same names, except demo_whatsapp_click, which GA4 gets as
+ * whatsapp_click. generate_lead is sent only by the contact form (components/Header.tsx).
  */
 export const trackDemo = (name: string, data?: Record<string, string>) => {
   try { track(name, data); } catch { /* analytics blocked or unavailable */ }
-  if (name === 'demo_whatsapp_click') {
-    gaEvent('whatsapp_click', data);
-    gaEvent('generate_lead', { method: 'whatsapp', ...data });
-  } else {
-    gaEvent(name, data);
-  }
+  // Opening WhatsApp isn't a lead (people open it out of curiosity and never send), so the click
+  // goes to GA4 only as whatsapp_click; generate_lead fires solely on a successful form submit.
+  gaEvent(name === 'demo_whatsapp_click' ? 'whatsapp_click' : name, data);
 };
 
 const SRC_KEY = 'demo-src';

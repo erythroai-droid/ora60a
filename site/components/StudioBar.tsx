@@ -31,7 +31,6 @@ export default function StudioBar() {
   const click = () => {
     trackDemo('demo_whatsapp_click', { opened_by: 'studio_bar', lang, ...(src ? { source: src } : {}) });
     fbTrack('Contact', { content_name: 'whatsapp' });
-    fbTrack('Lead', { content_name: 'whatsapp' });
   };
 
   return (
